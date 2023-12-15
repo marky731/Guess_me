@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 #define NUM_OF_WORD 5
+#define NUM_OF_MOVIE 7
 using namespace std;
 
 struct words_for_game {
@@ -83,7 +85,119 @@ public:
     }
 };
 
+class MovieGame
+{
+private:
+    string movies_2[NUM_OF_MOVIE] = {
+        "star wars",
+        "the godfather",
+        "jurassic park",
+        "fight club",
+        "pulp fiction",
+        "forrest gump",
+        "the matrix"
+    };
+    string movies_3[NUM_OF_MOVIE] = {
+        "the shawhank redemption",
+        "the dark knight",
+        "the lion king",
+        "twelve angry man"
+        "the truman show",
+        "the green mile",
+        "fast and furious"
+    };
+    string movies_4[NUM_OF_MOVIE];
+    
+    int level=0;
+public:
+    MovieGame()
+    {
+        cout << "--welcome to the movie guessing game!-- \n\n";
+    }
+    
+    void choose_level()
+    {
+        cout << "-Easy: 1\n-Medium: 2\n-Hard: 3\nyour choice: ";
+        cin >> level;
+    }
+    
+    void guess()
+    {
+        if (level == 1)
+        {
+            int choice;
+            for (int movieNUM = 0; movieNUM < NUM_OF_MOVIE; movieNUM++)
+            {
+                string current = censor(movies_2[movieNUM]);
+                string answer = censor(movies_2[movieNUM]);
+                bool correct_answer = false;
+                
+                cout << "\nmovie: " << current << endl;
+                cout << "--guess name: 1\n--guess letter: 2\n";
+                cout << "your choice: ";
+                cin >> choice;
+                
+                if(choice == 1)
+                {
+                    cout << "Name of the movie " << current << " ? \n";
+                    cin.ignore();
+                    getline(cin, answer);
+                    cout << answer.length() << current.length() << endl;
+                    if (answer.length() != current.length())
+                    {
+                        cout << "The length of words are not same! \n";
+                    }
+                    else
+                    {
+                        for(int letterNUM = 0; letterNUM < current.length(); letterNUM++)
+                        {
+                            if (answer[letterNUM] != movies_2[movieNUM][letterNUM])
+                            {
+                                cout << "Wrong answer. ";
+                                correct_answer = false;
+                                break;
+                            }
+                            else
+                            {
+                                correct_answer = true;
+                            }
+                        }
+                        
+                        if(correct_answer)
+                        {
+                            cout << "Correct! ";
+                        }
+                        
+                    }
+                }
+                
+                
+            }
+        }
 
+    }
+    
+    string censor(string pr_movies)
+    {
+        // temporary variable (which is gonna be censored)
+        string censored = pr_movies;
+        // censor the name of the movie
+        for(int letterNUM = 0; letterNUM < censored.length(); letterNUM++)
+        {
+            // dont censor the spaces
+            if(pr_movies[letterNUM]!=' ')
+            {
+                censored[letterNUM] = '*';
+            }
+            else
+            {
+                pr_movies[letterNUM] = ' ';
+            }
+        }
+        return censored;
+    }
+    
+};
 
 
 int main()
@@ -112,18 +226,20 @@ int main()
                 {
                     cout << endl;
                     break;
-                    
                 }
-               
             }
             
             cout << "You have used all your 5 chances. \n\n";
             if(NumOfWord < NUM_OF_WORD - 1)
             cout << "Next question:\n";
         }
-        
     }
-
+    else if (choice == 2)
+    {
+        MovieGame movie_game;
+        movie_game.choose_level();
+        movie_game.guess();
+    }
     
     return 0;
 }
