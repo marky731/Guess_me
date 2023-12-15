@@ -101,18 +101,23 @@ private:
         "the shawhank redemption",
         "the dark knight",
         "the lion king",
-        "twelve angry man"
+        "twelve angry man",
         "the truman show",
         "the green mile",
         "fast and furious"
     };
     string movies_4[NUM_OF_MOVIE];
-    
+
     int level=0;
+        
+    
 public:
     MovieGame()
     {
         cout << "--welcome to the movie guessing game!-- \n\n";
+        cout << "Rules: \n";
+        cout << "1. You have 5 chances to guess a letter in the name of the movie.\n";
+        cout << "2. You have only one chance to guess the name of the movie.\n\n";
     }
     
     void choose_level()
@@ -121,61 +126,25 @@ public:
         cin >> level;
     }
     
-    void guess()
+    void start_guess()
     {
         if (level == 1)
         {
-            int choice;
-            for (int movieNUM = 0; movieNUM < NUM_OF_MOVIE; movieNUM++)
-            {
-                string current = censor(movies_2[movieNUM]);
-                string answer = censor(movies_2[movieNUM]);
-                bool correct_answer = false;
-                
-                cout << "\nmovie: " << current << endl;
-                cout << "--guess name: 1\n--guess letter: 2\n";
-                cout << "your choice: ";
-                cin >> choice;
-                
-                if(choice == 1)
-                {
-                    cout << "Name of the movie " << current << " ? \n";
-                    cin.ignore();
-                    getline(cin, answer);
-                    cout << answer.length() << current.length() << endl;
-                    if (answer.length() != current.length())
-                    {
-                        cout << "The length of words are not same! \n";
-                    }
-                    else
-                    {
-                        for(int letterNUM = 0; letterNUM < current.length(); letterNUM++)
-                        {
-                            if (answer[letterNUM] != movies_2[movieNUM][letterNUM])
-                            {
-                                cout << "Wrong answer. ";
-                                correct_answer = false;
-                                break;
-                            }
-                            else
-                            {
-                                correct_answer = true;
-                            }
-                        }
-                        
-                        if(correct_answer)
-                        {
-                            cout << "Correct! ";
-                        }
-                        
-                    }
-                }
-                
-                
-            }
+            guess(movies_2);
+        }
+        else if (level == 2)
+        {
+            guess(movies_3);
+        }
+        else if (level == 3)
+        {
+            guess(movies_4);
         }
 
     }
+    
+// these methods are private because i dont want them to be called outside of the class
+private:
     
     string censor(string pr_movies)
     {
@@ -195,6 +164,111 @@ public:
             }
         }
         return censored;
+    }
+    
+    void guess_name(string &current, string answer, string pr_movie, bool correct_answer)
+    {
+        cout << "Name of the movie : " << current << " ? \n";
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        getline(cin, answer);
+        if (answer.length() != current.length())
+        {
+            cout << "The length of words are not same! \n";
+        }
+        else
+        {
+            for(int letterNUM = 0; letterNUM < current.length(); letterNUM++)
+            {
+                if (answer[letterNUM] != pr_movie[letterNUM])
+                {
+                    cout << "Wrong answer. ";
+                    correct_answer = false;
+                    break;
+                }
+                else
+                {
+                    correct_answer = true;
+                }
+            }
+            
+            if(correct_answer)
+            {
+                cout << "Correct! \n";
+            }
+            
+        }
+    }
+    
+    void guess_letter(string &current, string pr_movie)
+    {
+        char guessed_letter;
+        bool is_letter_existed = false;
+
+        cout << "Enter letter: ";
+        cin >> guessed_letter;
+        
+        for(int letterNUM = 0; letterNUM < current.length(); letterNUM++)
+        {
+            if(guessed_letter == pr_movie[letterNUM])
+            {
+                current[letterNUM] = guessed_letter;
+                is_letter_existed = true;
+            }
+        }
+        
+        if(!is_letter_existed)
+        {
+            cout << "Letter does not exist in the name of the movie.\n";
+        }
+        
+        cout << "movie: " << current << endl;
+    }
+    
+    void guess(string pr_movies[])
+    {
+        int choice;
+        for (int movieNUM = 0; movieNUM < NUM_OF_MOVIE; movieNUM++)
+        {
+            string current = censor(pr_movies[movieNUM]);
+            string answer = censor(pr_movies[movieNUM]);
+            bool correct_answer = false;
+            bool used_all_chance = false;
+            
+            cout << "\nmovie: " << current << endl;
+            cout << "--guess name: 1\n--guess letter: 2\n";
+            cout << "your choice: ";
+            cin >> choice;
+            
+            if(choice == 2)
+            {
+                guess_letter(current, pr_movies[movieNUM]);
+                for (int i = 0; i < 4; i++)
+                {
+                    cout << "--guess name: 1\n--guess letter: 2\n";
+                    cout << "your choice: ";
+                    cin >> choice;
+                    if(choice == 1)
+                    {
+                        guess_name(current, answer, pr_movies[movieNUM], &correct_answer);
+                        i = 99;
+                        choice = 3; // to avoid execute the if statement which calls guess_name()
+                        break;
+                    }
+                    guess_letter(current, pr_movies[movieNUM]);
+                    if (i+1 == 4)
+                    {
+                        cout << "you have used all your chance!\n";
+                    }
+                }
+            }
+            if ( choice == 1 || correct_answer == false)
+            {
+                if (correct_answer == false)
+                {
+                    guess_name(current, answer, pr_movies[movieNUM], correct_answer);
+                }
+            }
+        }
     }
     
 };
@@ -238,7 +312,7 @@ int main()
     {
         MovieGame movie_game;
         movie_game.choose_level();
-        movie_game.guess();
+        movie_game.start_guess();
     }
     
     return 0;
