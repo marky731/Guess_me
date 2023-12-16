@@ -98,8 +98,8 @@ private:
         "the matrix"
     };
     string movies_3[NUM_OF_MOVIE] = {
-        "the shawhank redemption",
         "the dark knight",
+        "the shawhank redemption",
         "the lion king",
         "twelve angry man",
         "the truman show",
@@ -122,7 +122,7 @@ public:
     
     void choose_level()
     {
-        cout << "-Easy: 1\n-Medium: 2\n-Hard: 3\nyour choice: ";
+        cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice: ";
         cin >> level;
     }
     
@@ -166,14 +166,16 @@ private:
         return censored;
     }
     
-    void guess_name(string &current, string answer, string pr_movie, bool correct_answer)
+    bool guess_name(string &current, string answer, string pr_movie, bool correct_answer)
     {
-        cout << "Name of the movie : " << current << " ? \n";
+        cout << "Name of the movie : " << endl;
+        cout << current << endl;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         getline(cin, answer);
         if (answer.length() != current.length())
         {
             cout << "The length of words are not same! \n";
+            cout << "Answer is : " << pr_movie << endl;
         }
         else
         {
@@ -181,7 +183,7 @@ private:
             {
                 if (answer[letterNUM] != pr_movie[letterNUM])
                 {
-                    cout << "Wrong answer. ";
+                    cout << "Wrong answer. \n";
                     correct_answer = false;
                     break;
                 }
@@ -193,10 +195,12 @@ private:
             
             if(correct_answer)
             {
+                correct_answer = true;
                 cout << "Correct! \n";
             }
             
         }
+        return correct_answer;
     }
     
     void guess_letter(string &current, string pr_movie)
@@ -232,7 +236,6 @@ private:
             string current = censor(pr_movies[movieNUM]);
             string answer = censor(pr_movies[movieNUM]);
             bool correct_answer = false;
-            bool used_all_chance = false;
             
             cout << "\nmovie: " << current << endl;
             cout << "--guess name: 1\n--guess letter: 2\n";
@@ -249,7 +252,7 @@ private:
                     cin >> choice;
                     if(choice == 1)
                     {
-                        guess_name(current, answer, pr_movies[movieNUM], &correct_answer);
+                        correct_answer = guess_name(current, answer, pr_movies[movieNUM], correct_answer);
                         i = 99;
                         choice = 3; // to avoid execute the if statement which calls guess_name()
                         break;
