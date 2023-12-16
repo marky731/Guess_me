@@ -1,3 +1,11 @@
+// 2200007052
+// ikram uygur
+
+
+// must be incloded ?
+// getline() ?
+// wrong input type ?
+
 #include <iostream>
 #include <string>
 #define NUM_OF_WORD 5
@@ -38,15 +46,20 @@ private:
     }; // creating the datas for game
     string guess; // users answer
     
-
 public:
-    
     FindTheSynonym()
     {
-        cout << "--welcome to the find synonym game!-- \n\n";
+        cout << "--welcome to the find synonym game!-- \n";
+        cout << "You have five chances to guess the synonym of the given turkish word.\n";
+        cout << "Remember always to use lowercase letters during the game.\n\n";
     }
     
-    string getWrod(int num)
+    ~FindTheSynonym()
+    {
+        
+    }
+
+    string getWord(int num)
     {
         return words[num].word; // return the corresponding words for game
     }
@@ -117,10 +130,16 @@ public:
     {
         cout << "--welcome to the movie guessing game!-- \n\n";
         cout << "Rules: \n";
-        cout << "1. You have 5 chances to guess a letter in the name of the movie.\n";
-        cout << "2. You have only one chance to guess the name of the movie.\n\n";
+        cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
+        cout << " 2. You have only one chance to guess the name of the movie.\n";
+        cout << "Note: Name of the movies are english\n\n";
     }
     
+    ~MovieGame()
+    {
+        
+    }
+
     void choose_level()
     {
         cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice: ";
