@@ -24,11 +24,17 @@ struct words_for_game {
     int score; 
 }; //data type for datas of guessing synonym games
 
+template <typename T>
+T add_score(T total, T added)
+{
+    return total+added;
+}
+
 class Game
 {
 protected:
     int number_of_attempts;
-    int player;
+    string player;
     int difficulity_level;
     int total_score;
     bool keep_play;
@@ -92,7 +98,8 @@ public:
             if(guess == words[num].synonyms)
             {
                 cout << "-- ! correct answer ! --\n"; // inform user the answer is true
-                total_score += words[num].score; // add the score of this word to the total score
+                //template function: add_score()
+                total_score = add_score(total_score, words[num].score); // add the score of this word to the total score
                 cout << "     Your score  : " << words[num].score << " \n"; // score of this round
                 cout << "     Total score : " << total_score << " \n"; // score of total
                 return  true; // answer is true
@@ -392,7 +399,7 @@ private:
             }
             if(keep_play)
             {
-                total_score = total_score + score_per_movie;
+                total_score = add_score(total_score, score_per_movie); // add the score of this word to the total score
                 cout << "     Your score  : " << score_per_movie << " \n"; // score of this round
                 cout << "     Total score : " << total_score << " \n"; // score of total
             }
