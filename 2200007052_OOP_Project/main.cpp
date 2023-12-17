@@ -8,7 +8,19 @@
 // wrong input type ?
 // input  problems in find synonyms ?
 // variables that aren't used in alghorithm ?
-// unused member acces functions ?
+// unused member access functions ?
+// exit property of first game ?
+
+
+// REQUIREMENTS:
+// +Classes (Game, FindTheSynonym, MovieGame)
+// +Constructors and Destructor (all of the three classes)
+// +Accessor and Mutator Methods ( get_total_score(), getWord() )
+// -Method overloading (missing)
+// +Virtual Methods ( start(), end() )
+// +Inheritance (Game, FindTheSynonym, MovieGame)
+// +Template function ( add_score() )
+// -Operator overloading (missing)
 
 #include <iostream>
 #include <string>
@@ -17,6 +29,7 @@
 #define NUM_OF_CHANCE 5
 using namespace std;
 
+// data type dor game
 struct words_for_game {
     string word; // the word to be shown to user
     bool used; // the word is used or not
@@ -24,13 +37,13 @@ struct words_for_game {
     int score; 
 }; //data type for datas of guessing synonym games
 
-template <typename T>
+template <typename T> // Template function
 T add_score(T total, T added)
 {
     return total+added;
 }
 
-class Game
+class Game  // base class
 {
 protected:
     int number_of_attempts;
@@ -64,11 +77,12 @@ public:
 
 class FindTheSynonym : public Game // class for first game. Game is to find the synonym of a word
 {
+// member variables:
 private:
     words_for_game words[NUM_OF_WORD];
     
     string guess; // users answer
-    
+// membeer functions
 public:
     FindTheSynonym()
     {
@@ -89,7 +103,7 @@ public:
     
     ~FindTheSynonym()
     {
-        end();
+        end(); // keep_play = false, print game ended
     }
     
     bool check_answer(int num)
@@ -158,6 +172,7 @@ public:
 
 class MovieGame : public Game
 {
+// member variables:
 private:
     // data set for easy mode
     string movies_2[NUM_OF_MOVIE];
@@ -186,7 +201,7 @@ public:
         movies_2[5] = "forrset gump";
         movies_2[6] = "the matrix";
         
-        movies_3[0] = "the dark knight";
+        movies_3[0] = "the dark night";
         movies_3[1] = "the shawhank redemption";
         movies_3[2] = "the lion king";
         movies_3[3] = "twelve angry man";
@@ -203,12 +218,6 @@ public:
     ~MovieGame()
     {
         end();
-    }
-
-    void choose_level()
-    {
-        cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice (0 for exit this game): ";
-        cin >> difficulity_level;
     }
     
     void start()
@@ -263,6 +272,12 @@ private:
             }
         }
         return censored;
+    }
+    
+    void choose_level()
+    {
+        cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice (0 for exit this game): ";
+        cin >> difficulity_level;
     }
     
     bool guess_name(string &current, string answer, string pr_movie, bool correct_answer)
@@ -334,7 +349,7 @@ private:
             cout << "Letter does not exist in the name of the movie.\n";
         }
         
-        cout << "movie: " << current << endl;
+        cout << "\nmovie: " << current << endl;
     }
     
     void guess(string pr_movies[])
@@ -420,11 +435,11 @@ int main()
         cout << "Choose a game to play: \n";
         cout << "1 - Find the synonym\n";
         cout << "2 - Guess movie\n";
-        cout << "3 - my game\n";
+        cout << "3 - my game\n\n";
         
         // user chooses a game to play or exit
         int choice;
-        cout << "\nEnter your choice (0 for terminate) : ";
+        cout << "Enter your choice (0 for terminate) : ";
         cin >> choice;
         cout << endl;
         
@@ -435,13 +450,13 @@ int main()
         }
         if (choice == 1) // if the first game is choosen
         {
-            FindTheSynonym synonym_game; // creaete object for 'find synonym game'
+            FindTheSynonym synonym_game; // create object for 'find synonym game'
             synonym_game.start();
             
         }
         else if (choice == 2)
         {
-            MovieGame movie_game;// creat game object
+            MovieGame movie_game;// create game object
             movie_game.start(); // whole process of the game is in thi method
         }
         
