@@ -5,6 +5,8 @@
 // must be incloded ?
 // getline() ?
 // wrong input type ?
+// input  problems in find synonyms ?
+// variables that aren't used in alghorithm ?
 
 #include <iostream>
 #include <string>
@@ -16,19 +18,33 @@ struct words_for_game {
     string word; // the word to be shown to user
     bool used; // the word is used or not
     string synonyms; // synonym of the word, which is wanted to be predicted from user
-    int score = 5; // default (initial) score is five
+    int score; 
 }; //data type for datas of guessing synonym games
 
 class Game
 {
 protected:
-    int number_of_attempts = 0;
+    int number_of_attempts;
     int player;
     int difficulity_level;
-    int total_score = 0;
+    int total_score;
+    bool keep_play;
+
 public:
-    void start();
-    void end();
+    Game()
+    {
+        
+    }
+    void start()
+    {
+        cout << "GAME STARTED: \n";
+    }
+    void end()
+    {
+        keep_play = false;
+        cout << "GAME ENDED. \n";
+
+    }
     void rules();
 
 };
@@ -36,14 +52,8 @@ public:
 class FindTheSynonym : public Game // class for first game. Game is to find the synonym of a word
 {
 private:
-    words_for_game words[NUM_OF_WORD] =
-    {
-        {"biçim", 0, "şekil"},
-        {"cevap", 0, "yanıt"},
-        {"obje", 0, "nesne"},
-        {"kalp", 0, "yürek"},
-        {"kabahat", 0, "suç"},
-    }; // creating the datas for game
+    words_for_game words[NUM_OF_WORD];
+    
     string guess; // users answer
     
 public:
@@ -52,16 +62,21 @@ public:
         cout << "--welcome to the find synonym game!-- \n";
         cout << "You have five chances to guess the synonym of the given turkish word.\n";
         cout << "Remember always to use lowercase letters during the game.\n\n";
+        
+        words[0] = {"biçim", 0, "şekil", 5};
+        words[1] = {"cevap", 0, "yanıt", 5};
+        words[2] = {"obje", 0, "nesne", 5};
+        words[3] = {"kalp", 0, "yürek", 5};
+        words[4] = {"kabahat", 0, "suç", 5};
+        
+        number_of_attempts = 0;
+        total_score = 0;
+        keep_play = true;
     }
     
     ~FindTheSynonym()
     {
-        
-    }
-
-    string getWord(int num)
-    {
-        return words[num].word; // return the corresponding words for game
+        end();
     }
     
     bool check_answer(int num)
@@ -90,6 +105,36 @@ public:
         cin >> guess;
     }
     
+    void start()
+    {
+        Game :: start();
+        int NumOfWord;
+        for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
+        {// for each word do the following:
+            for (number_of_attempts=1; number_of_attempts<=5; number_of_attempts++)
+            { // 5 chance to guess
+                getGuess(NumOfWord); // method prints the word and gets answer as input
+                bool is_answer_correct = check_answer(NumOfWord); // check answer
+                if (is_answer_correct)
+                {
+                    cout << endl;
+                    break; //stop guessing if answer is correct
+                }
+                if(number_of_attempts == 5 )
+                cout << "You have used all your 5 chances. \n\n";
+            }
+            
+            if(NumOfWord < NUM_OF_WORD - 1)
+            cout << "Next question:\n";
+        }
+        
+    }
+    
+    string getWord(int num)
+    {
+        return words[num].word; // return the corresponding words for game
+    }
+    
     int get_total_score()
     {
         return total_score; // member acces function.
@@ -100,68 +145,85 @@ class MovieGame : public Game
 {
 private:
     // data set for easy mode
-    string movies_2[NUM_OF_MOVIE] = {
-        "star wars",
-        "the godfather",
-        "jurassic park",
-        "fight club",
-        "pulp fiction",
-        "forrest gump",
-        "the matrix"
-    };
+    string movies_2[NUM_OF_MOVIE];
     // data set for medium mode
-    string movies_3[NUM_OF_MOVIE] = {
-        "the dark knight",
-        "the shawhank redemption",
-        "the lion king",
-        "twelve angry man",
-        "the truman show",
-        "the green mile",
-        "fast and furious"
-    };
+    string movies_3[NUM_OF_MOVIE];
     // data set for hard mode
     string movies_4[NUM_OF_MOVIE];
     // level (easy medium hard)
-    int level=0;
+    int score_per_movie;
         
     
 public:
     MovieGame()
     {
-        cout << "--welcome to the movie guessing game!-- \n\n";
+        cout << "--welcome to the |MOVIE GUESSING| game!-- \n\n";
         cout << "Rules: \n";
         cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
         cout << " 2. You have only one chance to guess the name of the movie.\n";
-        cout << "Note: Name of the movies are english\n\n";
+        cout << "Note: Name of the movies are in english\n\n";
+        
+        movies_2[0] = "star wars";
+        movies_2[1] = "the godfather";
+        movies_2[2] = "jurassic park";
+        movies_2[3] = "fight club";
+        movies_2[4] = "pulp fiction";
+        movies_2[5] = "forrset gump";
+        movies_2[6] = "the matrix";
+        
+        movies_3[0] = "the dark knight";
+        movies_3[1] = "the shawhank redemption";
+        movies_3[2] = "the lion king";
+        movies_3[3] = "twelve angry man";
+        movies_3[4] = "the truman show";
+        movies_3[5] = "the green mile";
+        movies_3[6] = "fast and furious";
+        
+        difficulity_level = 0;
+        total_score = 0;
     }
     
     ~MovieGame()
     {
-        
+        end();
     }
 
     void choose_level()
     {
-        cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice: ";
-        cin >> level;
+        cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice (0 for exit this game): ";
+        cin >> difficulity_level;
     }
     
-    void start_guess()
+    void start()
     {
-        if (level == 1)
+        Game :: start();
+
+        choose_level();
+        if (difficulity_level == 0)
+        {
+            end();
+        }
+        if (difficulity_level == 1)
         {
             guess(movies_2);  //get data set for easy mode for user to guess
         }
-        else if (level == 2)
+        else if (difficulity_level == 2)
         {
             guess(movies_3);  //get data set for medium mode for user to guess
         }
-        else if (level == 3)
+        else if (difficulity_level == 3)
         {
             guess(movies_4);  //get data set for hard mode for user to guess
         }
 
     }
+    
+    void end()
+    {
+        Game :: end();
+    }
+    
+    
     
 // these methods are private because i dont want them to be called outside of the class
 private:
@@ -198,6 +260,7 @@ private:
         {
             cout << "The length of words are not same! \n";
             cout << "Answer is : " << pr_movie << endl;
+            score_per_movie = 0; // no gained score
         }
         else // if the length is correct:
         {
@@ -210,6 +273,7 @@ private:
                     cout << "Wrong answer. \n";
                     cout << "Answer is : " << pr_movie << endl;
                     correct_answer = false; // the answer is wrong
+                    score_per_movie = 0; // no gained score
                     break; // so doesn't need to continue checking, get out of loop
                 }
                 else
@@ -267,17 +331,25 @@ private:
             bool name_guessed = false;  // if the only chance of guessing name is used
             
             cout << "\n\nmovie: " << current << endl;
-            cout << "--guess name: 1\n--guess letter: 2\n";
-            cout << "your choice: "; // let ser decide to guess letter or name
+            cout << "--guess name:   1\n--guess letter: 2\n--terminate:    0\n";
+            cout << "your choice (1, 2, 0):"; // let ser decide to guess letter or name
             cin >> choice;
+            if(choice == 0)
+            {
+                end();
+                break;
+            }
             
+            score_per_movie = 5;
+
             if(choice == 2) // if user decided to gues letter at the first place
             {
                 guess_letter(current, pr_movies[movieNUM]); // let user guess letter
                 for (int i = 0; i < 4; i++) // user has four chances left
                 {
-                    cout << "--guess name: 1\n--guess letter: 2\n";
-                    cout << "your choice: ";
+                    --score_per_movie;
+                    cout << "--guess name:   1\n--guess letter: 2\n--terminate:    0\n";
+                    cout << "your choice  (1,2,0):";
                     cin >> choice; // let ser decide to guess letter or name
                     if(choice == 1)  // if user decided to guess name
                     {
@@ -302,6 +374,9 @@ private:
                 // guess the name of the movie
                 guess_name(current, answer, pr_movies[movieNUM], correct_answer);
             }
+            total_score = total_score + score_per_movie;
+            cout << "     Your score  : " << score_per_movie << " \n"; // score of this round
+            cout << "     Total score : " << total_score << " \n"; // score of total
         }
     }
     
@@ -310,44 +385,40 @@ private:
 
 int main()
 {
-    // menu:
-    cout << "Welcome! choose a game to play: \n";
-    cout << "1 - Find the synonym\n";
-    cout << "2 - Guess movie\n";
-    cout << "3 - my game\n";
-    // user chooses a game to play
-    int choice;
-    cout << "\nEnter your choice (1,2,3) : ";
-    cin >> choice;
-    cout << endl;
-    
-    if (choice == 1) // if the first game is choosen
+    cout << "Welcome!\n";
+    Game myGame;
+    while (1)
     {
-        FindTheSynonym synonym_game; // creaete object for 'find synonym game'
-        for (int NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
-        {// for each word do the following:
-            for (int attemps=1; attemps<=5; attemps++)
-            { // 5 chance to guess
-                synonym_game.getGuess(NumOfWord); // method prints the word and gets answer as input
-                bool is_answer_correct = synonym_game.check_answer(NumOfWord); // check answer
-                if (is_answer_correct)
-                {
-                    cout << endl;
-                    break; //stop guessing if answer is correct
-                }
-                if(attemps == 5 )
-                cout << "You have used all your 5 chances. \n\n";
-            }
-            
-            if(NumOfWord < NUM_OF_WORD - 1)
-            cout << "Next question:\n";
+        // menu:
+        cout << "\n------------------------\n";
+        cout << "Choose a game to play: \n";
+        cout << "1 - Find the synonym\n";
+        cout << "2 - Guess movie\n";
+        cout << "3 - my game\n";
+        
+        // user chooses a game to play or exit
+        int choice;
+        cout << "\nEnter your choice (0 for terminate) : ";
+        cin >> choice;
+        cout << endl;
+        
+        if(choice == 0)
+        {
+            myGame.end();
+            break;
         }
-    }
-    else if (choice == 2)
-    {
-        MovieGame movie_game;// creat game object
-        movie_game.choose_level();
-        movie_game.start_guess(); // whole process of the game is in thi method
+        if (choice == 1) // if the first game is choosen
+        {
+            FindTheSynonym synonym_game; // creaete object for 'find synonym game'
+            synonym_game.start();
+            
+        }
+        else if (choice == 2)
+        {
+            MovieGame movie_game;// creat game object
+            movie_game.start(); // whole process of the game is in thi method
+        }
+        
     }
     
     return 0;
