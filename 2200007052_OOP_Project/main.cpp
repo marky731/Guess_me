@@ -37,11 +37,15 @@ struct words_for_game {
     int score; 
 }; //data type for datas of guessing synonym games
 
+
+
 template <typename T> // Template function
 T add_score(T total, T added)
 {
     return total+added;
 }
+
+
 
 class Game  // base class
 {
@@ -75,6 +79,8 @@ public:
 
 };
 
+
+
 class FindTheSynonym : public Game // class for first game. Game is to find the synonym of a word
 {
 // member variables:
@@ -87,7 +93,7 @@ public:
     FindTheSynonym()
     {
         cout << "--welcome to the find synonym game!-- \n";
-        cout << "You have five chances to guess the synonym of the given turkish word.\n";
+        cout << "You have 5 chances to guess the synonym of the given turkish word.\n";
         cout << "Remember always to use lowercase letters during the game.\n\n";
         
         words[0] = {"biçim", 0, "şekil", 5};
@@ -135,7 +141,7 @@ public:
     
     void start()
     {
-        Game :: start();
+        Game :: start(); // prints "GAME STARTED!!"
         int NumOfWord;
         for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
         {// for each word do the following:
@@ -170,6 +176,9 @@ public:
     }
 };
 
+
+
+
 class MovieGame : public Game
 {
 // member variables:
@@ -194,14 +203,14 @@ public:
         cout << "Note: Name of the movies are in english\n\n";
         
         movies_2[0] = "star wars";
-        movies_2[1] = "the godfather";
+        movies_2[1] = "harry potter";
         movies_2[2] = "jurassic park";
         movies_2[3] = "fight club";
         movies_2[4] = "pulp fiction";
         movies_2[5] = "forrset gump";
-        movies_2[6] = "the matrix";
+        movies_2[6] = "toy story";
         
-        movies_3[0] = "the dark night";
+        movies_3[0] = "the dark knight";
         movies_3[1] = "the shawhank redemption";
         movies_3[2] = "the lion king";
         movies_3[3] = "twelve angry man";
@@ -209,6 +218,16 @@ public:
         movies_3[5] = "the green mile";
         movies_3[6] = "fast and furious";
         
+        movies_4[0] = "back to the future";
+        movies_4[1] = "lord of the rings";
+        movies_4[2] = "the dark knight rises";
+        movies_4[3] = "pirates of the caribbean";
+        movies_4[4] = "beauty and the beast";
+        movies_4[5] = "there will be blood";
+        movies_4[6] = "back to the future";
+        
+        
+
         difficulity_level = 0;
         total_score = 0;
         number_of_attempts = 0;
@@ -422,6 +441,8 @@ private:
     }
     
 };
+
+
 
 
 int main()
