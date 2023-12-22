@@ -65,7 +65,7 @@ public:
     {
         
     }
-    void start()
+    virtual void start()
     {
         cout << "GAME STARTED: \n";
     }
@@ -139,9 +139,10 @@ public:
         cin >> guess;
     }
     
-    void start()
+    void start() override // override the virtual method
     {
-        Game :: start(); // prints "GAME STARTED!!"
+        cout << "FIND SYNONYM GAME STARTED : \n";
+        cout << "--------------------------\n";
         int NumOfWord;
         for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
         {// for each word do the following:
@@ -200,7 +201,7 @@ public:
         cout << "Rules: \n";
         cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
         cout << " 2. You have only one chance to guess the name of the movie.\n";
-        cout << "Note: Name of the movies are in english\n\n";
+        cout << " Note: Name of the movies are in english\n\n";
         
         movies_2[0] = "star wars";
         movies_2[1] = "harry potter";
@@ -239,10 +240,11 @@ public:
         end();
     }
     
-    void start()
+    void start() override
     {
-        Game :: start();
-
+        cout << "GUESS MOVIE NAME GAME STARTED : \n";
+        cout << "------------------------------\n";
+        
         choose_level();
         if (difficulity_level == 0)
         {
@@ -452,8 +454,9 @@ int main()
     while (1)
     {
         // menu:
-        cout << "\n------------------------\n";
-        cout << "Choose a game to play: \n";
+        cout << "\n==========================\n";
+        cout << "\nChoose a game to play: \n";
+        cout << "------------------------\n";
         cout << "1 - Find the synonym\n";
         cout << "2 - Guess movie\n";
         cout << "3 - my game\n\n";
