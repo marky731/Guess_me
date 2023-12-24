@@ -2,25 +2,21 @@
 // ikram uygur
 
 
-// must be included ?
 // vs code ?
 // getline() ?
 // wrong input type ?
-// input  problems in find synonyms ?
-// variables that aren't used in alghorithm ?
 // unused member access functions ?
-// exit property of first game ?
 
 
 // ALL REQUIREMENTS:
-//  Classes (Game, FindTheSynonym, MovieGame)
-//  Constructors and Destructor (all of the three classes)
+//  Classes ( -BASED: Game.  -DERIVED: FindTheSynonym, MovieGame, GuessTheActor)
+//  Constructors and Destructor (all of the four classes)
 //  Accessor and Mutator Methods ( get_total_score(), getWord() )
 //  Method overloading ( censor() )
-//  - Virtual Methods ( kinda missing )
+//  Virtual Methods ( reminder() )
 //  Inheritance (Game, FindTheSynonym, MovieGame)
 //  Template function ( add_score() )
-//  Operator overloading (missing)
+//  - Operator overloading (missing)
 
 #include <iostream>
 #include <string>
@@ -30,51 +26,6 @@
 #define NUM_OF_ACTOR 7
 
 using namespace std;
-
-string censor(string pr_to_censor)
-{
-    // temporary variable (which is gonna be censored)
-    string censored = pr_to_censor;
-    // censor the name of the movie
-    for(int letterNUM = 0; letterNUM < censored.length(); letterNUM++)
-    {
-        // dont censor the spaces
-        if(pr_to_censor[letterNUM]!=' ')
-        {
-            censored[letterNUM] = '*';
-        }
-        else
-        {
-            pr_to_censor[letterNUM] = ' ';
-        }
-    }
-    return censored;
-}
-
-// not used in program. Because there are no need to use it in my program.
-// i didn't want to make my code look complicated by using this concept for unnecessary reasons
-// it is not a complicated concept so I thought I'm not expected to prove i know this concep by usingit in my code
-// only written for requirements of the project assignment
-string censor(string pr_to_censor, int *letter_num)
-{
-    // temporary variable (which is gonna be censored)
-    string censored = pr_to_censor;
-    // censor the name of the movie
-    for(int letterNUM = 0; letterNUM < censored.length(); letterNUM++)
-    {
-        // dont censor the spaces
-        if(pr_to_censor[letterNUM]!=' ')
-        {
-            censored[letterNUM] = '*';
-            *letter_num -= 1;
-        }
-        else
-        {
-            pr_to_censor[letterNUM] = ' ';
-        }
-    }
-    return censored;
-}
 
 
 // data type dor game
@@ -109,15 +60,17 @@ public:
     {
 
     }
+    
     ~Game()
     {
-        cout << "GAME ENDED. \n";
 
     }
+    
     void start()
     {
         cout << "GAME STARTED: \n";
     }
+    
     void end()
     {
         keep_play = false;
@@ -132,16 +85,56 @@ public:
         cin >> difficulity_level;
     }
     
-    void reminder()
+    
+    virtual void reminder() = 0; // virtual function
+
+    
+    string censor(string pr_to_censor)
     {
-        cout << "Entering 0 anywhere can terminate the game.\n";
+        // temporary variable (which is gonna be censored)
+        string censored = pr_to_censor;
+        // censor the name of the movie
+        for(int letterNUM = 0; letterNUM < censored.length(); letterNUM++)
+        {
+            // dont censor the spaces
+            if(pr_to_censor[letterNUM]!=' ')
+            {
+                censored[letterNUM] = '*';
+            }
+            else
+            {
+                pr_to_censor[letterNUM] = ' ';
+            }
+        }
+        return censored;
     }
 
+    // method overloading
+    string censor(string pr_to_censor, int *letter_num)
+    {
+        // temporary variable (which is gonna be censored)
+        string censored = pr_to_censor;
+        // censor the name of the movie
+        for(int letterNUM = 0; letterNUM < censored.length(); letterNUM++)
+        {
+            // dont censor the spaces
+            if(pr_to_censor[letterNUM]!=' ')
+            {
+                censored[letterNUM] = '*';
+                *letter_num -= 1; // we get the number of letters which are not spaces
+            }
+            else
+            {
+                pr_to_censor[letterNUM] = ' ';
+            }
+        }
+        return censored;
+    }
 };
 
 
 // ------------------------------------------------- //
-class FindTheSynonym : public Game // class for first game. Game is to find the synonym of a word
+class FindTheSynonym : public Game // class for first game.
 {
 // member variables:
 private:
@@ -154,7 +147,8 @@ public:
     FindTheSynonym()
     {
         cout << "\n--welcome to the find synonym game!-- \n\n";
-        cout << "->You have 5(easy), 3(medium) or 1(hard) chances to guess the synonym of the given TURKISH word.\n";
+        cout << "You have 5(easy), 3(medium) or 1(hard) chances to guess the synonym of the given TURKISH word.\n";
+        cout << "         -------  ---------    ------- -------                                   -------\n\n";
         
         reminder();
         
@@ -247,25 +241,25 @@ public:
             cout << "Invalid input. \n";
         }
 
-        
-        
         int NumOfWord;
         for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
-        {// for each word do the following:
+        {
+            // for each word do the following:
             for (number_of_attempts=1; number_of_attempts <= totalAttempNUM; number_of_attempts++)
-            { // 5 chance to guess
+            {
+                // for each attempt do the following:
                 getGuess(NumOfWord); // method prints the word and gets answer as input
                 bool is_answer_correct = check_answer(NumOfWord, minus_score);
                 if (keep_play==false)
                 {
-                    break; // check_answer() returns false if user enterd 0 as answer
+                    break; // check_answer() returns false if user enterd 0 as answer  to quit
                 }
                 
                 // check answer
                 if (is_answer_correct)
                 {
                     cout << endl;
-                    break; //stop guessing if answer is correct
+                    break; //stop guessing if answer is correct. Move to the next word
                 }
                 if(number_of_attempts == totalAttempNUM )
                 {
@@ -300,9 +294,10 @@ public:
     }
     
     
-    void reminder()
+    void reminder() override
     {
-        cout << "Remember always to use lowercase letters during the game.\n\n";
+        cout << "Remember always to use lowercase letters during the game.\n";
+        cout << "                       ----------\n\n";
     }
 };
 
@@ -322,7 +317,6 @@ private:
     
     int score_per_movie;
         
-    
 public:
     MovieGame()
     {
@@ -330,10 +324,13 @@ public:
         cout << "Rules: \n";
         cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
         cout << " 2. You have only one chance to guess the name of the movie.\n";
-        cout << " Note: Name of the movies are in english\n";
-        cout << "       Use lowercase letters during the game.\n\n";
+        cout << " 3. Easy: 2 word, Medium: 3 word, Hard: 4 word\n\n";
+        cout << " Note: Name of the movies are in ENGLISH\n";
+        cout << "       Use LOWERCASE letters during the game.\n";
         
-        // initialize the data sets
+        reminder();
+        
+        // initialize the data sets. curly braces for organizing
         {
             movies_2[0] = "star wars";
             movies_2[1] = "harry potter";
@@ -399,10 +396,13 @@ public:
         
     }
     
+    void reminder() override
+    {
+        cout << "       (Enter 0 anywhen you want to QUIT)\n\n";
+    }
 
 // these methods are private because i dont want them to be called outside of the class
 private:
-
     bool guess_name(string &current, string answer, string pr_movie, bool correct_answer)
     {
         cout << "Name of the movie : " << endl;
@@ -410,7 +410,7 @@ private:
         
         // i had trouble with getting the space characters included by cin
         // so i found these two lines on internet to solve the problem
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clears the buffer
         getline(cin, answer);
         
         
@@ -494,12 +494,15 @@ private:
         int choice;
         for (int movieNUM = 0; movieNUM < NUM_OF_MOVIE; movieNUM++)
         {
+            cout << "\n";
+            cout << movieNUM+1 << "/" << NUM_OF_MOVIE << " : \n";
+            cout << "-----\n";
             string current = censor(pr_movies[movieNUM]); // censor the correct answer
             string answer = censor(pr_movies[movieNUM]);  // the main aim actually is to declare string with the same lenght
             bool correct_answer = false; // if the answer is correct
             bool name_guessed = false;  // if the only chance of guessing name is used
             
-            cout << "\n\nmovie: " << current << endl;
+            cout << "movie: " << current << endl;
             cout << "--guess name:   1\n--guess letter: 2\n--terminate:    0\n";
             cout << "your choice (1, 2, 0):"; // let ser decide to guess letter or name
             cin >> choice;
@@ -514,8 +517,8 @@ private:
             if(choice == 2) // if user decided to gues letter at the first place
             {
                 guess_letter(current, pr_movies[movieNUM]); // let user guess letter
-                ++number_of_attempts;
-                if(keep_play==false)
+                ++number_of_attempts; // became 1
+                if(keep_play==false) // if user enter 0 as answer
                     {
                         break;
                     }
@@ -554,7 +557,8 @@ private:
                     end();
                     break; // breaks the main for loop
                 }
-            }
+            } // end of if(choice == 2)
+            
             // if user decided to gues letter at the first place or tried to guess letter 5 times:
             if ( (choice == 1 || !name_guessed)&&keep_play)
             {
@@ -573,14 +577,14 @@ private:
                 cout << "     Total score : " << total_score << " \n"; // score of total
             }
             
-        }
+        } // end of for loop
     }
     
 };
 
 
 // ------------------------------------------------- //
-struct actor_movie
+struct actor_movie  // struct to store actor and movies of that actor as clue
 {
     string actor;
     string movie[3];
@@ -598,12 +602,14 @@ public:
         
         cout << "You have to guess the actor based on the movies! \n";
         cout << "\nRules: \n";
-        cout << "1. You can choose 3 levels of difficulty.\n";
+        cout << "1. You can choose 3 LEVELS of DIFFICULITY.\n";
         cout << "2. You get 1 movie for HARD level, 2 movies for MEDIUM level and 3 movies for EASY level.\n";
+        cout << "           ----------------        --------------------          ------------------\n";
         cout << "3. You get 1 point for EASY level, 2 points for MEDIUM level and 3 points for HARD level.\n";
-        cout << "4. You have three chanses at every level.\n";
-        cout << "NOTE: Use lowercase letters during the game.\n\n";
+        cout << "           ----------------        --------------------          ------------------\n";
+        cout << "4. You have 1 chance to guess at every level.\n\n";
 
+        reminder();
             
         //declare the actor and movies:
         {
@@ -648,10 +654,17 @@ public:
             keep_play = true;
         }
     }
+    
     ~guessActor()
     {
         cout << "ACTOR GAME ENDED. \n";
         end();
+    }
+    
+    void reminder() override
+    {
+        cout << "NOTE: Use LOWERCASE letters during the game.\n";
+        cout << "      Enter 0 anywhen you want to QUIT.\n\n";
     }
     
     void start()
@@ -692,32 +705,38 @@ public:
         }
     }
     
+    void end()
+    {
+        cout << "ACTOR GAME ENDED\n";
+    }
     
     
+private:
     bool guess_actor(int pr_movieNUM)
     {
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        // i get this line from internet to make getline() work properly. (no more contents we didn't see in class included in my code)
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clears the buffer
         
         for (int actorNUM = 0; actorNUM<NUM_OF_ACTOR; actorNUM++)
         {
-            for(int i = 0; i<pr_movieNUM; i++)
+            // for each actor
+            cout << "\n";
+            cout << actorNUM+1 << "/" << NUM_OF_ACTOR << " : \n";
+            cout << "-----\n";
+            for(int i = 0; i<pr_movieNUM; i++) // print corresponding amount of movie names
             {
-                cout << i+1 << ". " << question[actorNUM].movie[i] << "\n";
+                cout << "  " << i+1 << ".Movie Name: " << question[actorNUM].movie[i] << "\n";
             }
             
-            string censored = censor(question[actorNUM].actor);
-            string answer = censor(question[actorNUM].actor);
+            string censored = censor(question[actorNUM].actor); // censor the name of actor and show it to user
+            string answer = censor(question[actorNUM].actor); // to make length of string answer equal to string of actors name
 
             cout << "Actor :  " << censored << "\n";
             cout << "Answer:  ";
             
-            // i had trouble with getting the space characters included by cin
-            // so i found these two lines on internet to solve the problem
             getline(cin, answer);
+            
             // since now the answer is stored in  variable 'answer'
-            
-//            cin >> answer;
-            
             if (answer == "0")
             {
                 end();
@@ -736,11 +755,12 @@ public:
                 if(answer == question[actorNUM].actor)
                 {
                     cout << "Correct! \n";
-                    total_score =  add_score(total_score, pr_movieNUM); // my template function
+                        
+                    total_score =  add_score(total_score, difficulity_level); // my template function
                     // pr_movieNUM because number of movie player gets is equal to the score for that round
                     
-                    cout << "     Your score  : " << pr_movieNUM << " \n"; // score of this round
-                    cout << "     Total score : " << total_score << " \n"; // score of total
+                    cout << "     Your score  : " << difficulity_level << " \n"; // score of this round
+                    cout << "     Total score : " << total_score << " \n\n"; // score of total
                 }
                 else
                 {
@@ -755,22 +775,12 @@ public:
         end();
         return true;
     }
-    
-    void end()
-    {
-        Game :: end();
-        cout << "Thank you for playing! \n";
-    }
-
-    
 };
 
 int main()
 {
     cout << "Welcome!\n";
-    
-    Game myGame;
-    
+        
     while (1)
     {
         // menu:
@@ -789,7 +799,6 @@ int main()
         
         if(choice == 0)
         {
-            myGame.end();
             break;
         }
         if (choice == 1) // if the first game is choosen
@@ -815,6 +824,8 @@ int main()
         
     }
     
+    cout << "Goodbye!\n\n";
+    
     return 0;
 }
 
@@ -822,3 +833,8 @@ int main()
 // 0 can terminate the game where ever you are in the algorithm.
 // scoring system is working find
 // no problem detected
+
+
+
+// 2200007052
+// ikram uygur
