@@ -474,7 +474,7 @@ private:
             {
                 // double ensure the boolen variable is true
                 correct_answer = true;
-                cout << "Correct! \n";
+                cout << "-- ! correct answer ! --\n"; // inform user the answer is true
             }
             
         }
@@ -774,8 +774,8 @@ private:
             {
                 if(answer == question[actorNUM].actor)
                 {
-                    cout << "Correct! \n";
-                        
+                    cout << "-- ! correct answer ! --\n"; // inform user the answer is true
+
                     total_score =  add_score(total_score, difficulity_level); // my template function
                     // pr_movieNUM because number of movie player gets is equal to the score for that round
                     
