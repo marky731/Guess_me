@@ -407,9 +407,13 @@ private:
     {
         cout << "Name of the movie : " << endl;
         cout << current << endl;
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
         // i had trouble with getting the space characters included by cin
-        getline(cin, answer);  // so i found these two lines on internet to solve the problem
+        // so i found these two lines on internet to solve the problem
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        getline(cin, answer);
+        
+        
         
         // since now the answer is stored in  variable 'answer'
         if (answer == "0")
@@ -512,7 +516,9 @@ private:
                 guess_letter(current, pr_movies[movieNUM]); // let user guess letter
                 ++number_of_attempts;
                 if(keep_play==false)
-                    break;
+                    {
+                        break;
+                    }
                 for (number_of_attempts=1; number_of_attempts < NUM_OF_CHANCE; number_of_attempts++) // user has four chances left
                 {
                     --score_per_movie;
@@ -686,8 +692,11 @@ public:
         }
     }
     
+    
+    
     bool guess_actor(int pr_movieNUM)
     {
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         
         for (int actorNUM = 0; actorNUM<NUM_OF_ACTOR; actorNUM++)
         {
@@ -697,14 +706,14 @@ public:
             }
             
             string censored = censor(question[actorNUM].actor);
-            string answer;
+            string answer = censor(question[actorNUM].actor);
 
             cout << "Actor :  " << censored << "\n";
             cout << "Answer:  ";
             
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             // i had trouble with getting the space characters included by cin
-            getline(cin, answer);  // so i found these two lines on internet to solve the problem
+            // so i found these two lines on internet to solve the problem
+            getline(cin, answer);
             // since now the answer is stored in  variable 'answer'
             
 //            cin >> answer;
@@ -743,6 +752,7 @@ public:
             }
             
         }
+        end();
         return true;
     }
     
