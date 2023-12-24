@@ -152,11 +152,34 @@ public:
         
         reminder();
         
-        words[0] = {"biçim", 0, "şekil", 5};
-        words[1] = {"cevap", 0, "yanıt", 5};
-        words[2] = {"obje", 0, "nesne", 5};
-        words[3] = {"kalp", 0, "yürek", 5};
-        words[4] = {"kabahat", 0, "suç", 5};
+// these line works on xcode and visual studio but not on vscode.
+// and i also cant create executable file because these 5 lines
+//        words[0] = {"biçim", 0, "şekil", 5};
+//        words[1] = {"cevap", 0, "yanıt", 5};
+//        words[2] = {"obje", 0, "nesne", 5};
+//        words[3] = {"kalp", 0, "yürek", 5};
+//        words[4] = {"kabahat", 0, "suç",
+        
+        
+        for(int i = 0; i < 5; i++)
+        {
+            words[i].score = 5;
+            words[i].used = false;
+        }
+        
+        words[0].word = "biçim";
+        words[1].word = "cevap";
+        words[2].word = "obje";
+        words[3].word = "kalp";
+        words[4].word = "kabahat";
+        
+        words[0].synonyms = "şekil";
+        words[1].synonyms = "yanıt";
+        words[2].synonyms = "nesne";
+        words[3].synonyms = "yürek";
+        words[4].synonyms = "suç";
+        
+        
         
         number_of_attempts = 0;
         total_score = 0;
@@ -324,7 +347,7 @@ public:
         cout << "Rules: \n";
         cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
         cout << " 2. You have only one chance to guess the name of the movie.\n";
-        cout << " 3. Easy: 2 word, Medium: 3 word, Hard: 4 word\n\n";
+        cout << " 3. Easy: 2 word,   Medium: 3 word,   Hard: 4 word\n\n";
         cout << " Note: Name of the movies are in ENGLISH\n";
         cout << "       Use LOWERCASE letters during the game.\n";
         
@@ -657,7 +680,7 @@ public:
     
     ~guessActor()
     {
-        cout << "ACTOR GAME ENDED. \n";
+        cout << "ACTOR GAME ENDED.\n";
         end();
     }
     
@@ -678,23 +701,25 @@ public:
             if (difficulity_level == 0)
             {
                 end();
-                keep_play = false;
                 break;
             }
             if (difficulity_level == 1)
             {
                 int movieNUM = 3;
                 guess_actor(movieNUM);
+                break;
             }
             else if (difficulity_level == 2)
             {
                 int movieNUM = 2;
                 guess_actor(movieNUM);
+                break;
             }
             else if (difficulity_level == 3)
             {
                 int movieNUM = 1;
                 guess_actor(movieNUM);
+                break;
             }
             else
             {
@@ -704,11 +729,7 @@ public:
             
         }
     }
-    
-    void end()
-    {
-        cout << "ACTOR GAME ENDED\n";
-    }
+
     
     
 private:
@@ -739,7 +760,6 @@ private:
             // since now the answer is stored in  variable 'answer'
             if (answer == "0")
             {
-                end();
                 return false;
             }
             else if (answer.length() != question[actorNUM].actor.length())
@@ -770,8 +790,8 @@ private:
                     cout << "     Total score : " << total_score << " \n\n"; // score of total
                 }
             }
-            
-        }
+        } // end of for loop
+        
         end();
         return true;
     }
