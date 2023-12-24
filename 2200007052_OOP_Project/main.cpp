@@ -152,8 +152,8 @@ public:
         
         reminder();
         
-// these line works on xcode and visual studio but not on vscode.
-// and i also cant create executable file because these 5 lines
+// these line works on xcode and visual studio but not on vsCode.
+// and i also cant create executable file because these 5 lines :
 //        words[0] = {"biçim", 0, "şekil", 5};
 //        words[1] = {"cevap", 0, "yanıt", 5};
 //        words[2] = {"obje", 0, "nesne", 5};
@@ -178,8 +178,6 @@ public:
         words[2].synonyms = "nesne";
         words[3].synonyms = "yürek";
         words[4].synonyms = "suç";
-        
-        
         
         number_of_attempts = 0;
         total_score = 0;
@@ -436,8 +434,6 @@ private:
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clears the buffer
         getline(cin, answer);
         
-        
-        
         // since now the answer is stored in  variable 'answer'
         if (answer == "0")
         {
@@ -476,8 +472,8 @@ private:
                 correct_answer = true;
                 cout << "-- ! correct answer ! --\n"; // inform user the answer is true
             }
-            
         }
+        
         return true; // return true because the name is guessed once.
     }
     
@@ -621,8 +617,7 @@ private:
 public:
     guessActor()
     {
-        cout << "--welcome to the |MOVIE GUESSING| game!-- \n\n";
-        
+        cout << "--welcome to the |ACTOR GUESSING| game!-- \n\n";
         cout << "You have to guess the actor based on the movies! \n";
         cout << "\nRules: \n";
         cout << "1. You can choose 3 LEVELS of DIFFICULITY.\n";
@@ -726,7 +721,6 @@ public:
                 cout << "Invalid input! \n";
                 continue;
             }
-            
         }
     }
 
