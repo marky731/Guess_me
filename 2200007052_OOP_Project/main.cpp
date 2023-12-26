@@ -28,16 +28,6 @@
 using namespace std;
 
 
-// data type dor game
-struct words_for_game {
-    string word; // the word to be shown to user
-    bool used; // the word is used or not
-    string synonyms; // synonym of the word, which is wanted to be predicted from user
-    int score; 
-}; //data type for datas of guessing synonym games
-
-
-
 template <typename T> // Template function
 T add_score(T total, T added)
 {
@@ -83,6 +73,11 @@ public:
     {
         cout << " -Easy:   1\n -Medium: 2\n -Hard:   3\nyour choice (0 for exit this game): ";
         cin >> difficulity_level;
+    }
+    
+    int getTotalScore()
+    {
+        return total_score;
     }
     
     
@@ -134,6 +129,75 @@ public:
 
 
 // ------------------------------------------------- //
+class Player
+{
+protected:
+    string username;
+    string gamePlayed[3];
+    int gameScore;
+    
+    
+    
+public:
+    Player()
+    {
+        username = "";
+        gameScore = 0;
+    }
+    
+    
+    void setTotalScore(int score)
+    {
+        gameScore += score;
+    }
+    
+    
+    void setUserName()
+    {
+        cout << "What is your name?  ";
+        cin >> username;
+    }
+    
+    
+    void setGamePlayed(string game)
+    {
+        if (game == "Find Synonym")
+        {
+            gamePlayed[0] = game;
+        }
+        else if (game == "Movie Game")
+        {
+            gamePlayed[1] = game;
+        }
+        else if (game == "Guess the Ator")
+        {
+            gamePlayed[2] = game;
+        }
+    }
+    
+    int getGameScore()
+    {
+        return gameScore;
+    }
+    
+    string getUserName()
+    {
+        return username;
+    }
+};
+
+
+
+// ------------------------------------------------- //
+// data type dor game
+struct words_for_game {
+    string word; // the word to be shown to user
+    bool used; // the word is used or not
+    string synonyms; // synonym of the word, which is wanted to be predicted from user
+    int score;
+};
+
+
 class FindTheSynonym : public Game // class for first game.
 {
 // member variables:
@@ -307,14 +371,7 @@ public:
     {
         return words[num].word; // return the corresponding words for game
     }
-    
-    
-    int get_total_score()
-    {
-        return total_score; // member acces function.
-    }
-    
-    
+        
     void reminder() override
     {
         cout << "Remember always to use lowercase letters during the game.\n";
@@ -764,9 +821,9 @@ private:
                 cout << "     Your score  : 0 \n"; // score of this round
                 cout << "     Total score : " << total_score << " \n\n"; // score of total
             }
-            else
+            else // if user answered the question appropriately
             {
-                if(answer == question[actorNUM].actor)
+                if(answer == question[actorNUM].actor) //i fthe answer is correct
                 {
                     cout << "-- ! correct answer ! --\n"; // inform user the answer is true
 
@@ -776,7 +833,7 @@ private:
                     cout << "     Your score  : " << difficulity_level << " \n"; // score of this round
                     cout << "     Total score : " << total_score << " \n\n"; // score of total
                 }
-                else
+                else // answer is wrong
                 {
                     cout << "Wrong! \n";
                     cout << "The answer was : " << question[actorNUM].actor << "\n";
@@ -794,6 +851,15 @@ private:
 int main()
 {
     cout << "Welcome!\n";
+    
+    char c;
+    Player ThePlayer; // create player object
+    
+    cout << "Do you want to set a user name (y/n)? ";
+    cin >> c;
+    
+    if (c == 'y')
+        ThePlayer.setUserName();
         
     while (1)
     {
@@ -819,17 +885,22 @@ int main()
         {
             FindTheSynonym synonym_game; // create object for 'find synonym game'
             synonym_game.start();
-            
+            int score = synonym_game.getTotalScore();
+            ThePlayer.setTotalScore(score);
         }
         else if (choice == 2)
         {
             MovieGame movie_game;// create game object
             movie_game.start(); // whole process of the game is in thi method
+            int score = movie_game.getTotalScore();
+            ThePlayer.setTotalScore(score);
         }
         else if (choice == 3)
         {
             guessActor actor_game;
             actor_game.start();
+            int score = actor_game.getTotalScore();
+            ThePlayer.setTotalScore(score);
         }
         else // if user enters invalid input
         {
@@ -838,7 +909,8 @@ int main()
         
     }
     
-    cout << "Goodbye!\n\n";
+    cout << "Your total score: " << ThePlayer.getGameScore() << ". \n";
+    cout << "Goodbye " << ThePlayer.getUserName()<< "!\n\n";
     
     return 0;
 }
