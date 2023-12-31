@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		042AC12A2B2C2B1800C4B773 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042AC1292B2C2B1800C4B773 /* main.cpp */; };
+		04D13EDA2B41CB3E00B75849 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13ED82B41CB3E00B75849 /* Game.cpp */; };
+		04D13EDD2B41CDFB00B75849 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EDB2B41CDFB00B75849 /* Player.cpp */; };
+		04D13EE02B41CF0000B75849 /* FindTheSynonym.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EDE2B41CF0000B75849 /* FindTheSynonym.cpp */; };
+		04D13EE32B41D0A400B75849 /* MovieGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EE12B41D0A400B75849 /* MovieGame.cpp */; };
+		04D13EE62B41D21900B75849 /* guessActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EE42B41D21900B75849 /* guessActor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +30,16 @@
 /* Begin PBXFileReference section */
 		042AC1262B2C2B1800C4B773 /* 2200007052_OOP_Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = 2200007052_OOP_Project; sourceTree = BUILT_PRODUCTS_DIR; };
 		042AC1292B2C2B1800C4B773 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		04D13ED82B41CB3E00B75849 /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		04D13ED92B41CB3E00B75849 /* Game.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
+		04D13EDB2B41CDFB00B75849 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		04D13EDC2B41CDFB00B75849 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		04D13EDE2B41CF0000B75849 /* FindTheSynonym.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FindTheSynonym.cpp; sourceTree = "<group>"; };
+		04D13EDF2B41CF0000B75849 /* FindTheSynonym.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FindTheSynonym.hpp; sourceTree = "<group>"; };
+		04D13EE12B41D0A400B75849 /* MovieGame.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovieGame.cpp; sourceTree = "<group>"; };
+		04D13EE22B41D0A400B75849 /* MovieGame.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MovieGame.hpp; sourceTree = "<group>"; };
+		04D13EE42B41D21900B75849 /* guessActor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = guessActor.cpp; sourceTree = "<group>"; };
+		04D13EE52B41D21900B75849 /* guessActor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = guessActor.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +73,16 @@
 			isa = PBXGroup;
 			children = (
 				042AC1292B2C2B1800C4B773 /* main.cpp */,
+				04D13EE42B41D21900B75849 /* guessActor.cpp */,
+				04D13EE52B41D21900B75849 /* guessActor.hpp */,
+				04D13EE12B41D0A400B75849 /* MovieGame.cpp */,
+				04D13EE22B41D0A400B75849 /* MovieGame.hpp */,
+				04D13EDE2B41CF0000B75849 /* FindTheSynonym.cpp */,
+				04D13EDF2B41CF0000B75849 /* FindTheSynonym.hpp */,
+				04D13EDB2B41CDFB00B75849 /* Player.cpp */,
+				04D13EDC2B41CDFB00B75849 /* Player.hpp */,
+				04D13ED82B41CB3E00B75849 /* Game.cpp */,
+				04D13ED92B41CB3E00B75849 /* Game.hpp */,
 			);
 			path = 2200007052_OOP_Project;
 			sourceTree = "<group>";
@@ -120,6 +145,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				042AC12A2B2C2B1800C4B773 /* main.cpp in Sources */,
+				04D13EDA2B41CB3E00B75849 /* Game.cpp in Sources */,
+				04D13EE02B41CF0000B75849 /* FindTheSynonym.cpp in Sources */,
+				04D13EE62B41D21900B75849 /* guessActor.cpp in Sources */,
+				04D13EE32B41D0A400B75849 /* MovieGame.cpp in Sources */,
+				04D13EDD2B41CDFB00B75849 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
