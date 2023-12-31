@@ -9,14 +9,14 @@
 
 
 // ALL REQUIREMENTS:
-//  Classes ( -BASED: Game.  -DERIVED: FindTheSynonym, MovieGame, GuessTheActor)
+//  Classes ( Player. -BASED: Game.  -DERIVED: FindTheSynonym, MovieGame, GuessTheActor)
 //  Constructors and Destructor (all of the four classes)
 //  Accessor and Mutator Methods ( get_total_score(), getWord() )
 //  Method overloading ( censor() )
 //  Virtual Methods ( reminder() )
-//  Inheritance (Game, FindTheSynonym, MovieGame)
+//  Inheritance (Game, FindTheSynonym, MovieGame, GuessTheActor)
 //  Template function ( add_score() )
-//  - Operator overloading (missing)
+//  - Operator overloading ('==' for Game class, '+' for Player class)
 
 #include <iostream>
 #include <string>
@@ -125,6 +125,9 @@ public:
         }
         return censored;
     }
+    
+    friend bool operator==(Game& game1, Game& game2);
+
 };
 
 
@@ -184,6 +187,9 @@ public:
     {
         return username;
     }
+    
+    friend Player operator+(Player& player1, Player& player2);
+
 };
 
 
@@ -217,12 +223,12 @@ public:
         reminder();
         
 // these line works on xcode and visual studio but not on vsCode.
-// and i also cant create executable file because these 5 lines :
+// and i also cant create executable file because of these 5 lines :
 //        words[0] = {"biçim", 0, "şekil", 5};
 //        words[1] = {"cevap", 0, "yanıt", 5};
 //        words[2] = {"obje", 0, "nesne", 5};
 //        words[3] = {"kalp", 0, "yürek", 5};
-//        words[4] = {"kabahat", 0, "suç",
+//        words[4] = {"kabahat", 0, "suç"};
         
         
         for(int i = 0; i < 5; i++)
@@ -402,7 +408,7 @@ public:
         cout << "Rules: \n";
         cout << " 1. You have 5 chances to guess a letter in the name of the movie.\n";
         cout << " 2. You have only one chance to guess the name of the movie.\n";
-        cout << " 3. Easy: 2 word,   Medium: 3 word,   Hard: 4 word\n\n";
+        cout << " 3. Easy: 2 words,   Medium: 3 words,   Hard: 4 words\n\n";
         cout << " Note: Name of the movies are in ENGLISH\n";
         cout << "       Use LOWERCASE letters during the game.\n";
         
@@ -666,6 +672,7 @@ struct actor_movie  // struct to store actor and movies of that actor as clue
     string movie[3];
 };
 
+// ------------------------------------------------- //
 class guessActor: public Game
 {
 private:
@@ -848,18 +855,37 @@ private:
     }
 };
 
+
+// ------------------------------------------------- //
+Player operator+(Player& player1, Player& player2)
+{
+    Player result;
+    result.setTotalScore(player1.getGameScore() + player2.getGameScore());
+    // You might also want to combine other player-related information.
+    return result;
+}
+
+bool operator==(Game& game1, Game& game2)
+{
+    return game1.getTotalScore() == game2.getTotalScore();
+}
+
+
+
+
 int main()
 {
+    cout << "\n\n";
     cout << "Welcome!\n";
     
     char c;
-    Player ThePlayer; // create player object
+    Player player1; // create player object
     
     cout << "Do you want to set a user name (y/n)? ";
     cin >> c;
     
     if (c == 'y')
-        ThePlayer.setUserName();
+        player1.setUserName();
         
     while (1)
     {
@@ -886,21 +912,21 @@ int main()
             FindTheSynonym synonym_game; // create object for 'find synonym game'
             synonym_game.start();
             int score = synonym_game.getTotalScore();
-            ThePlayer.setTotalScore(score);
+            player1.setTotalScore(score);
         }
         else if (choice == 2)
         {
             MovieGame movie_game;// create game object
             movie_game.start(); // whole process of the game is in thi method
             int score = movie_game.getTotalScore();
-            ThePlayer.setTotalScore(score);
+            player1.setTotalScore(score);
         }
         else if (choice == 3)
         {
             guessActor actor_game;
             actor_game.start();
             int score = actor_game.getTotalScore();
-            ThePlayer.setTotalScore(score);
+            player1.setTotalScore(score);
         }
         else // if user enters invalid input
         {
@@ -909,8 +935,8 @@ int main()
         
     }
     
-    cout << "Your total score: " << ThePlayer.getGameScore() << ". \n";
-    cout << "Goodbye " << ThePlayer.getUserName()<< "!\n\n";
+    cout << "Your total score: " << player1.getGameScore() << ". \n";
+    cout << "Goodbye " << player1.getUserName()<< "!\n\n";
     
     return 0;
 }
