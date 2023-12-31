@@ -2,12 +2,6 @@
 // ikram uygur
 
 
-// vs code ?
-// getline() ?
-// wrong input type ?
-// unused member access functions ?
-
-
 // ALL REQUIREMENTS:
 //  Classes ( Player. -BASED: Game.  -DERIVED: FindTheSynonym, MovieGame, GuessTheActor)
 //  Constructors and Destructor (all of the four classes)
@@ -941,7 +935,7 @@ int main()
     return 0;
 }
 
-// algorithm works problemless for ever game
+// algorithm works problemless for every game
 // 0 can terminate the game where ever you are in the algorithm.
 // scoring system is working find
 // no problem detected
