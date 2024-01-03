@@ -40,7 +40,7 @@ public:
     
 // these methods are private because i dont want them to be called outside of the class
 private:
-    bool guess_name(string &current, string answer, string pr_movie, bool correct_answer);
+    bool guess_name(string &current, string answer, string pr_movie, bool &correct_answer);
     
     void guess_letter(string &current, string pr_movie);
     

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		042AC12A2B2C2B1800C4B773 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042AC1292B2C2B1800C4B773 /* main.cpp */; };
+		0416E9622B42CD4500B3595F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 042AC1292B2C2B1800C4B773 /* main.cpp */; };
 		04D13EDA2B41CB3E00B75849 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13ED82B41CB3E00B75849 /* Game.cpp */; };
 		04D13EDD2B41CDFB00B75849 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EDB2B41CDFB00B75849 /* Player.cpp */; };
 		04D13EE02B41CF0000B75849 /* FindTheSynonym.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D13EDE2B41CF0000B75849 /* FindTheSynonym.cpp */; };
@@ -144,9 +144,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				042AC12A2B2C2B1800C4B773 /* main.cpp in Sources */,
 				04D13EDA2B41CB3E00B75849 /* Game.cpp in Sources */,
 				04D13EE02B41CF0000B75849 /* FindTheSynonym.cpp in Sources */,
+				0416E9622B42CD4500B3595F /* main.cpp in Sources */,
 				04D13EE62B41D21900B75849 /* guessActor.cpp in Sources */,
 				04D13EE32B41D0A400B75849 /* MovieGame.cpp in Sources */,
 				04D13EDD2B41CDFB00B75849 /* Player.cpp in Sources */,

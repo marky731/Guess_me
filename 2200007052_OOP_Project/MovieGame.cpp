@@ -91,7 +91,7 @@ void MovieGame:: reminder()
 }
 
 // these methods are private because i dont want them to be called outside of the class
-bool MovieGame:: guess_name(string &current, string answer, string pr_movie, bool correct_answer)
+bool MovieGame:: guess_name(string &current, string answer, string pr_movie, bool &correct_answer)
 {
     cout << "Name of the movie : " << endl;
     cout << current << endl;
@@ -175,6 +175,7 @@ void MovieGame:: guess_letter(string &current, string pr_movie)
     }
 }
 
+
 void MovieGame:: guess(string pr_movies[])
 {
     int choice;
@@ -186,45 +187,28 @@ void MovieGame:: guess(string pr_movies[])
         string current = censor(pr_movies[movieNUM]); // censor the correct answer
         string answer = censor(pr_movies[movieNUM]);  // the main aim actually is to declare string with the same lenght
         bool correct_answer = false; // if the answer is correct
-        bool name_guessed = false;  // if the only chance of guessing name is used
-        
-        cout << "movie: " << current << endl;
-        cout << "--guess name:   1\n--guess letter: 2\n--terminate:    0\n";
-        cout << "your choice (1, 2, 0):"; // let ser decide to guess letter or name
-        cin >> choice;
-        if(choice == 0)
-        {
-            end();
-            break;
-        }
+        bool name_is_guessed = false;  // if the only chance of guessing name is used
         
         score_per_movie = 5;
 
-        if(choice == 2) // if user decided to gues letter at the first place
-        {
-            guess_letter(current, pr_movies[movieNUM]); // let user guess letter
-            ++number_of_attempts; // became 1
-            if(keep_play==false) // if user enter 0 as answer
-                {
-                    break;
-                }
-            for (number_of_attempts=1; number_of_attempts < NUM_OF_CHANCE; number_of_attempts++) // user has four chances left
+            for (number_of_attempts=0; number_of_attempts < NUM_OF_CHANCE; number_of_attempts++) // user has four chances left
             {
-                --score_per_movie;
+                cout << "Movie: " << current << endl;
                 cout << "--guess name:   1\n--guess letter: 2\n--terminate:    0\n";
                 cout << "your choice  (1,2,0):";
                 cin >> choice; // let ser decide to guess letter or name
                 if(choice == 0)
                 {
+                    end();
                     break; // breaks the small for loop
                 }
                 if(choice == 1)  // if user decided to guess name
                 {
                     // correct_answer is true if the only chance of usesr is
-                    name_guessed = guess_name(current, answer, pr_movies[movieNUM], correct_answer);
+                    name_is_guessed = guess_name(current, answer, pr_movies[movieNUM], correct_answer);
                     if(keep_play==false)
                         break;
-                    name_guessed = true;
+                    name_is_guessed = true;
                     number_of_attempts = 99; // double sure the for loop does not continue
                     choice = 3; // to avoid execute the if statement which calls guess_name()
                     break; // break because it don't need to gues letter below
@@ -236,30 +220,19 @@ void MovieGame:: guess(string pr_movies[])
                 if (number_of_attempts+1 == NUM_OF_CHANCE) // if this is the last chance to guess letter and apparently is used above
                 {
                     cout << "you have used all your chance!\n";
+                    guess_name(current, answer, pr_movies[movieNUM], correct_answer);
                 }
             }
-            if(choice == 0)
-            {
-                end();
-                break; // breaks the main for loop
-            }
-        } // end of if(choice == 2)
-        
-        // if user decided to gues letter at the first place or tried to guess letter 5 times:
-        if ( (choice == 1 || !name_guessed)&&keep_play)
-        {
-            // guess the name of the movie
-            guess_name(current, answer, pr_movies[movieNUM], correct_answer);
-        }
-        
-        if(keep_play==false)
-            break;
-        
+
         if(keep_play == true)
         {
             total_score = total_score + score_per_movie; // add the score of this word to the total score
             cout << "     Your score  : " << score_per_movie << " \n"; // score of this round
             cout << "     Total score : " << total_score << " \n"; // score of total
+        }
+        else if(keep_play == false)
+        {
+            break;
         }
         
     } // end of for loop
