@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 int main()
 {
     cout << "\n\n";
@@ -77,8 +76,3 @@ int main()
     
     return 0;
 }
-
-// algorithm works problemless for every game
-// 0 can terminate the game where ever you are in the algorithm.
-// scoring system is working find
-// no problem detected

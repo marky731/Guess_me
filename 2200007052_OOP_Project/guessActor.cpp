@@ -1,10 +1,3 @@
-//
-//  guessActor.cpp
-//  2200007052_OOP_Project
-//
-//  Created by MAC on 31.12.2023.
-//
-
 #include "guessActor.hpp"
 
 guessActor:: guessActor()

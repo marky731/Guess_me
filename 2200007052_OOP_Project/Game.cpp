@@ -10,16 +10,6 @@
 
 using namespace std;
 
-Game:: Game()
-{
-
-}
-
-Game:: ~Game()
-{
-
-}
-
 void Game:: start()
 {
     cout << "GAME STARTED: \n";

@@ -6,6 +6,8 @@
 //
 
 #include "FindTheSynonym.hpp"
+#include <cstdlib>
+#include <ctime>
 
 FindTheSynonym:: FindTheSynonym()
 {
@@ -27,6 +29,7 @@ FindTheSynonym:: FindTheSynonym()
     for(int i = 0; i < 5; i++)
     {
         words[i].score = 5;
+        words[i].used = false;
     }
     
     words[0].word = "biçim";
@@ -125,14 +128,20 @@ void FindTheSynonym:: start()  // override the virtual method
     }
 
     int NumOfWord;
-    for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)
+    for (NumOfWord = 0; NumOfWord < NUM_OF_WORD; NumOfWord++)  // for each word do the following:
     {
-        // for each word do the following:
-        for (number_of_attempts=1; number_of_attempts <= totalAttempNUM; number_of_attempts++)
+        int rand_index = 0;
+        srand(static_cast<unsigned int>(time(NULL)));
+        do
         {
-            // for each attempt do the following:
-            getGuess(NumOfWord); // method prints the word and gets answer as input
-            bool is_answer_correct = check_answer(NumOfWord, minus_score);
+            rand_index = rand() % NUM_OF_WORD;
+        }
+        while (words[rand_index].used == true);
+        
+        for (number_of_attempts=1; number_of_attempts <= totalAttempNUM; number_of_attempts++) // for each attempt do the following:
+        {
+            getGuess(rand_index); // method prints the word and gets answer as input
+            bool is_answer_correct = check_answer(rand_index, minus_score);
             if (keep_play==false)
             {
                 break; // check_answer() returns false if user enterd 0 as answer  to quit
@@ -147,10 +156,11 @@ void FindTheSynonym:: start()  // override the virtual method
             if(number_of_attempts == totalAttempNUM )
             {
                 cout << "You have used all your chances. \n";
-                cout << "     Your score  : " << words[NumOfWord].score << " \n"; // score of this round
+                cout << "     Your score  : " << words[rand_index].score << " \n"; // score of this round
                 cout << "     Total score : " << total_score << " \n\n"; // score of total
             }
         }
+        words[rand_index].used = true;
         
         if (keep_play==false)
         {
@@ -163,13 +173,6 @@ void FindTheSynonym:: start()  // override the virtual method
     
 }
 
-
-// member acces functions:
-string FindTheSynonym:: getWord(int num)
-{
-    return words[num].word; // return the corresponding words for game
-}
-    
 void FindTheSynonym:: reminder()
 {
     cout << "Remember always to use lowercase letters during the game.\n";

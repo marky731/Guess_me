@@ -20,6 +20,7 @@ struct words_for_game {
     string word; // the word to be shown to user
     string synonyms; // synonym of the word, which is wanted to be predicted from user
     int score;
+    bool used;
 };
 
 
@@ -42,9 +43,6 @@ public:
     bool check_answer(int num, int minus_score);
 
     void start();  // override the virtual method
-    
-    // member acces functions:
-    string getWord(int num);
         
     void reminder() override;
 };

@@ -22,10 +22,6 @@ protected:
     bool keep_play;
 
 public:
-    Game();
-    
-    ~Game();
-    
     void start();
     
     void end();
